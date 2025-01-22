@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Invite</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .invite-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            padding: 20px;
+        }
+        .invite-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6f61;
+        }
+        .event-details {
+            margin: 20px 0;
+            color: #555;
+        }
+        .event-details p {
+            margin: 5px 0;
+        }
+        .rsvp-button {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .rsvp-button:hover {
+            background-color: #e65a50;
+        }
+    </style>
+</head>
+<body>
+    <div class="invite-container">
+        <h1 class="invite-title">You're Invited!</h1>
+        <div class="event-details">
+            <p><strong>Event:</strong> Birthday Party</p>
+            <p><strong>Date:</strong> January 28, 2025</p>
+            <p><strong>Time:</strong> 6:00 PM</p>
+            <p><strong>Location:</strong> 123 Celebration Lane, Partyville</p>
+        </div>
+        <button class="rsvp-button" onclick="alert('Thanks for RSVPing!')">RSVP Now</button>
+    </div>
+</body>
+</html>
