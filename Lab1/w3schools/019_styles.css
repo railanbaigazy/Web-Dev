@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+ul, ol, dl {
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+ul ul, ol ul, ul ol {
+    list-style-type: circle;
+    margin-left: 20px;
+}
+
+ul ul ul, ol ul ul {
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+.styled-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.styled-list li {
+    background-color: #f4f4f4;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.styled-list li:hover {
+    background-color: #e2e2e2;
+}
+
+dl dt {
+    font-weight: bold;
+    color: #555;
+}
+
+dl dd {
+    margin-left: 20px;
+    color: #777;
+}
