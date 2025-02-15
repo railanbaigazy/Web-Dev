@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('new-task');
     const addTaskBtn = document.getElementById('add-task');
     const taskList = document.getElementById('task-list');
+    const historyList = document.getElementById('history-list');
   
     function addTask() {
       const taskText = taskInput.value.trim();
@@ -9,6 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Please enter a task.");
         return;
       }
+
+
+      const historyLi = document.createElement('li');
+      historyLi.textContent = "Added: Task \"" + taskText + "\"";
+      historyList.appendChild(historyLi);
   
       const li = document.createElement('li');
       li.className = 'task-item';
@@ -32,6 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteBtn.textContent = 'Delete';
       deleteBtn.addEventListener('click', () => {
         taskList.removeChild(li);
+
+        const historyLi = document.createElement('li');
+        historyLi.textContent = "Deleted: Task \"" + taskText + "\"";
+        historyList.appendChild(historyLi);
+
       });
   
       li.appendChild(checkbox);
