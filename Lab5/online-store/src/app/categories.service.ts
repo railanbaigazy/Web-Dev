@@ -303,6 +303,18 @@ export class CategoriesService {
       .filter((product) => !this.sessionService.isProductRemoved(product.id));
   }
 
+  getLikedProducts(): Product[] {
+    return this.categories
+      .flatMap((category) => category.products)
+      .filter((product) => this.sessionService.isProductLiked(product.id));
+  }
+
+  getRemovedProducts(): Product[] {
+    return this.categories
+      .flatMap((category) => category.products)
+      .filter((product) => this.sessionService.isProductRemoved(product.id));
+  }
+
   getProductsByCategory(categoryName: string): Product[] {
     for (let category of this.categories) {
       if (category.category.toLowerCase() === categoryName) {

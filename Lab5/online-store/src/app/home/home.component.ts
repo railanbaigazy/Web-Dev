@@ -1,17 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CategoriesService } from '../categories.service';
 import { Product } from '../product';
-import { ProductItemComponent } from '../product-item/product-item.component';
+import { ProductsContainerComponent } from '../products-container/products-container.component';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductItemComponent],
+  imports: [ProductsContainerComponent],
   template: `
-    <div class="home-container">
-      @for (product of products; track product.id) {
-        <app-product-item [product]="product" />
-      }
-    </div>
+    <app-products-container [products]="products" />
   `,
   styleUrl: './home.component.css'
 })

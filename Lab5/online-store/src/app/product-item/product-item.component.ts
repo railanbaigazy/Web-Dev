@@ -28,8 +28,8 @@ import { CategoriesService } from '../categories.service';
       </div>
 
       <div class="likes">
-        <button (click)="toggleLike()" class="like-btn">{{ isLiked ? 'Unlike' : 'Like'}}</button>
-        <span>{{ product.likes }}</span>
+        <button (click)="toggleLike()" class="like-btn" [class.liked-like-btn]="isLiked">{{ isLiked ? 'Unlike' : 'Like'}}</button>
+        <span [class.liked-span]="isLiked">{{ product.likes }}</span>
       </div>
     </div>
   `,

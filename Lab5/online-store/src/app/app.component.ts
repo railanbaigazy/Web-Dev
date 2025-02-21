@@ -19,6 +19,14 @@ import { RouterModule } from '@angular/router';
             </li>
           }
         </ul>
+        <ul>
+          <li>
+            <a [routerLink]="'/liked-products'"><i class="fa-solid fa-heart"></i></a>
+          </li>
+          <li>
+            <a [routerLink]="'/removed-products'"><i class="fa-solid fa-trash"></i></a>
+          </li>
+        </ul>
       </nav>
     </header>
     <router-outlet />
