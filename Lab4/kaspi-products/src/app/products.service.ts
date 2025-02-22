@@ -131,4 +131,8 @@ export class ProductsService {
   getProducts(): Product[] {
     return this.products;
   }
+
+  getFilteredProducts(rating: number): Product[] {
+    return this.products.filter(product => product.rating >= rating);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
 import { TruncatePipe } from '../truncate.pipe';
@@ -7,6 +7,10 @@ import { TruncatePipe } from '../truncate.pipe';
   selector: 'app-products',
   imports: [TruncatePipe],
   template: `
+    <form>
+      <input type="text" placeholder="Filter rating" #filter />
+      <button type="button" (click)="filterResults(filter.value)">Search</button>
+    </form>
     <div class="products-container">
       @for (product of products; track product.id) {
         <div class="product-card">
@@ -38,10 +42,11 @@ export class ProductsComponent implements OnInit {
   productsService: ProductsService = inject(ProductsService);
 
   constructor() { 
-    this.products = this.productsService.getProducts();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.products = this.productsService.getProducts();
+  }
 
   shareOnWhatsApp(product: Product): void {
     const message = `Check out this product: ${product.name} - ${product.link}`;
@@ -51,5 +56,9 @@ export class ProductsComponent implements OnInit {
   shareOnTelegram(product: Product): void {
     const message = `Check out this product: ${product.name}`;
     window.open(`https://t.me/share/url?url=${encodeURIComponent(product.link)}&text=${encodeURIComponent(message)}`, '_blank');
+  }
+
+  filterResults(rating: string) {
+    this.products = this.productsService.getFilteredProducts(Number(rating));
   }
 }
