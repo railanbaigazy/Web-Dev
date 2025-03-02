@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Album } from './album';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Photo } from './photo';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,27 @@ export class AlbumsService {
     return this.http.get<Album[]>(this.albumsUrl).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getAlbumById(albumId: number): Observable<Album> {
+    const url = `${this.albumsUrl}/${albumId}`;
+    return this.http.get<Album>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateAlbum(albumId: number, updatedAlbum: Album): Observable<Album> {
+    const url = `${this.albumsUrl}/${albumId}`;
+    return this.http.put<Album>(url, updatedAlbum, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+
+  getAlbumPhotos(albumId: number): Observable<Photo[]> {
+    const url = `${this.albumsUrl}/${albumId}/photos`;
+    return this.http.get<Photo[]>(url).pipe(
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

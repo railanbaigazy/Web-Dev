@@ -7,29 +7,40 @@ import { AlbumItemComponent } from '../album-item/album-item.component';
   selector: 'app-albums',
   imports: [AlbumItemComponent],
   template: `
-    <h2>Albums list:</h2>
-    <ul>
-      @for (album of albums; track album.id) {
-        <app-album-item [album]="album" />
-      }
-    </ul>
+    <section>
+      <h2>Albums list:</h2>
+      <ul>
+        @if (!albums) {
+          @for (_ of skeletons; track $index) {
+            <li class="skeleton"></li>
+          }
+        }
+
+        @for (album of albums; track album.id) {
+          <app-album-item [album]="album" />
+        }
+      </ul>
+    </section>
   `,
   styleUrl: './albums.component.scss'
 })
 export class AlbumsComponent implements OnInit {
-  albums: Album[] = [];
+  albums: Album[] | null = null;
+  skeletons = Array.from({ length: 40 });
 
   constructor(private albumsService: AlbumsService) {}
 
   ngOnInit() {
     console.log('Waiting for albums data...');
 
-    this.albumsService.getAllAlbums().subscribe(
-      data => {
-        this.albums = data;
-        console.log('Albums received');
-      },
-      err => console.log('Error fetching errors:', err)
-    );
+    setTimeout(() => {
+      this.albumsService.getAllAlbums().subscribe(
+        data => {
+          this.albums = data;
+          console.log('Albums received');
+        },
+        err => console.log('Error fetching errors:', err)
+      );
+    }, 1000);
   }
 }

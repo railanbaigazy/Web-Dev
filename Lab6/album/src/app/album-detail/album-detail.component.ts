@@ -1,15 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AlbumsService } from '../albums.service';
+import { Album } from '../album';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-album-detail',
-  imports: [],
+  imports: [FormsModule, RouterLink],
   template: `
-    <p>
-      album-detail works!
-    </p>
+    <section class="album-detail">
+      <button (click)="goBack()"><i class="fa-solid fa-rotate-left"></i> Return</button>
+      <input [(ngModel)]="albumTitle" (ngModelChange)="onTitleChange()" [disabled]="!isChangable" type="text">
+      <button (click)="onClickSaveTitle()" [disabled]="!isChanged || isSaving" [textContent]="isSaving ? 'Saving...' : 'Save'"></button>
+      <div class="update-title-status" [hidden]="true"></div>
+      <a [routerLink]="['photos']">Photos</a>
+    </section>
   `,
   styleUrl: './album-detail.component.scss'
 })
-export class AlbumDetailComponent {
+export class AlbumDetailComponent implements OnInit {
+  album!: Album;
+  albumTitle: string = 'Loading...';
+  isSaving = false;
+  isChanged = false;
+  isChangable = false;
 
+  constructor(private route: ActivatedRoute, private router: Router, private albumsService: AlbumsService) { }
+
+  ngOnInit() {
+    const albumId = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.albumsService.getAlbumById(albumId).subscribe(data => {
+      this.album = data;
+      this.albumTitle = data.title;
+      this.isChangable = true;
+    });
+  }
+
+  goBack() {
+    this.router.navigate(['/albums']);
+  }
+
+  onTitleChange() {
+    this.isChanged = this.albumTitle !== this.album.title;
+  }
+
+  onClickSaveTitle() {
+    this.isSaving = true;
+    this.isChangable = false;
+    this.album.title = this.albumTitle;
+    this.albumsService.updateAlbum(this.album.id, this.album).subscribe(() => {
+      console.log('Album updated successfully');
+      this.isSaving = this.isChanged = false;
+      this.isChangable = true;
+    }); 
+  }
 }

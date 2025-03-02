@@ -1,0 +1,38 @@
+@use './variables.scss' as vars;
+@use "sass:color";
+
+header {
+    background: vars.$primary-color;
+    padding: 1rem 0;
+
+    nav {
+        display: flex;
+        justify-content: center;
+
+        ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+
+            li {
+                a {
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: color.adjust(vars.$primary-color, $lightness: 30%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+router-outlet {
+    display: block;
+    padding: 20px;
+}
