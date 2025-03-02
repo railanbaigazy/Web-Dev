@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Album } from '../album';
 import { RouterLink } from '@angular/router';
 
@@ -15,8 +15,9 @@ import { RouterLink } from '@angular/router';
 })
 export class AlbumItemComponent {
   @Input() album!: Album;
+  @Output() albumRemoved = new EventEmitter<Album>();
 
   removeAlbumItem() {
-
+    this.albumRemoved.emit(this.album);
   }
 }

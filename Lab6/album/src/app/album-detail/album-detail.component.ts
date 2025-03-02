@@ -12,7 +12,10 @@ import { FormsModule } from '@angular/forms';
       <button (click)="goBack()"><i class="fa-solid fa-rotate-left"></i> Return</button>
       <input [(ngModel)]="albumTitle" (ngModelChange)="onTitleChange()" [disabled]="!isChangable" type="text">
       <button (click)="onClickSaveTitle()" [disabled]="!isChanged || isSaving" [textContent]="isSaving ? 'Saving...' : 'Save'"></button>
-      <div class="update-title-status" [hidden]="true"></div>
+
+      @if (isUpdated) {
+        <div class="update-title-status">{{ updateStatus }}</div>
+      }
       <a [routerLink]="['photos']">Photos</a>
     </section>
   `,
@@ -24,6 +27,8 @@ export class AlbumDetailComponent implements OnInit {
   isSaving = false;
   isChanged = false;
   isChangable = false;
+  updateStatus: string = '';
+  isUpdated = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private albumsService: AlbumsService) { }
 
@@ -43,16 +48,27 @@ export class AlbumDetailComponent implements OnInit {
 
   onTitleChange() {
     this.isChanged = this.albumTitle !== this.album.title;
+    this.isUpdated = false;
   }
 
   onClickSaveTitle() {
     this.isSaving = true;
     this.isChangable = false;
     this.album.title = this.albumTitle;
-    this.albumsService.updateAlbum(this.album.id, this.album).subscribe(() => {
-      console.log('Album updated successfully');
-      this.isSaving = this.isChanged = false;
-      this.isChangable = true;
-    }); 
+
+    this.albumsService.updateAlbum(this.album.id, this.album).subscribe(
+      () => {
+        console.log('Album updated successfully');
+        this.isSaving = this.isChanged = false;
+        this.isChangable = this.isUpdated = true;
+        this.updateStatus = '✅ Title updated successfully';
+      },
+      err => {
+        console.log('Error updating album:', err);
+        this.isSaving = false;
+        this.isChangable = this.isUpdated = true;
+        this.updateStatus = '❌ Error updating album';
+      }
+    ); 
   }
 }

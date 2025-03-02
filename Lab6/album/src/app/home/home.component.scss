@@ -1,0 +1,50 @@
+@use '../variables.scss' as vars;
+@use 'sass:color';
+$background-gradient: linear-gradient(135deg, #007bff, #00c6ff);
+$text-color: white;
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: $background-gradient;
+    color: $text-color;
+    text-align: center;
+
+    .container {
+        max-width: 600px;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        background: white;
+        color: vars.$primary-color;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s, transform 0.2s;
+
+        &:hover {
+            background: color.adjust(white, $lightness: 10%);
+            transform: scale(1.05);
+        }
+    }
+}

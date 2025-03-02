@@ -9,6 +9,7 @@ import { Photo } from './photo';
 })
 export class AlbumsService {
   private albumsUrl = 'https://jsonplaceholder.typicode.com/albums';
+  private removedAlbums: Album[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -27,9 +28,13 @@ export class AlbumsService {
 
   updateAlbum(albumId: number, updatedAlbum: Album): Observable<Album> {
     const url = `${this.albumsUrl}/${albumId}`;
-    return this.http.put<Album>(url, updatedAlbum, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
+    return this.http
+      .put<Album>(url, updatedAlbum, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      })
+      .pipe(
+        catchError(this.handleError)
+      ); 
   }
 
   getAlbumPhotos(albumId: number): Observable<Photo[]> {
@@ -37,6 +42,14 @@ export class AlbumsService {
     return this.http.get<Photo[]>(url).pipe(
       catchError(this.handleError)
     )
+  }
+
+  removeAlbum(album: Album) {
+    this.removedAlbums.push(album);
+  }
+
+  getRemovedAlbums(): Album[] {
+    return this.removedAlbums;
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

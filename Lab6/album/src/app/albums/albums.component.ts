@@ -17,7 +17,7 @@ import { AlbumItemComponent } from '../album-item/album-item.component';
         }
 
         @for (album of albums; track album.id) {
-          <app-album-item [album]="album" />
+          <app-album-item [album]="album" (albumRemoved)="onAlbumRemoved($event)" />
         }
       </ul>
     </section>
@@ -42,5 +42,12 @@ export class AlbumsComponent implements OnInit {
         err => console.log('Error fetching errors:', err)
       );
     }, 1000);
+  }
+
+  onAlbumRemoved(album: Album) {
+    if (this.albums) {
+      this.albums = this.albums.filter(al => al.id !== album.id);
+      this.albumsService.removeAlbum(album);
+    }
   }
 }
