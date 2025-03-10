@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Test</title>
+</head>
+<body>
+    <h1>Users</h1>
+    <input type="text" id="search" placeholder="Search users">
+    <button id="search-btn">Search</button>
+    <ul id="users"></ul>
+
+    <script>
+        const ul = document.getElementById('users');
+        const search = document.getElementById('search');
+        const searchBtn = document.getElementById('search-btn');
+
+        async function fetchUsers() {            
+            try {
+                const resp = await fetch('https://jsonplaceholder.typicode.com/users');
+                const data = await resp.json();
+                ul.innerHTML = data.map(user => `<li>${user.name}</li>`).join('');
+            } catch (error) {
+                ul.innerText = 'Failed to fetch users';
+            }
+        }
+
+        async function fetchUsersByName(name) {
+            try {
+                const resp = await fetch(`https://jsonplaceholder.typicode.com/users?name_like=${name}`);
+                const data = await resp.json();
+                ul.innerHTML = data.map(user => `<li>${user.name}</li>`).join('');
+            } catch (error) {
+                ul.innerText = 'Failed to fetch users';
+            }
+        }
+
+        searchBtn.addEventListener('click', async function() {
+            const query = search.value;
+            await fetchUsersByName(query);
+        });
+
+        fetchUsers();
+    </script>
+</body>
+</html>
