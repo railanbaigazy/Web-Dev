@@ -13,6 +13,10 @@ export class SessionService {
     this.removedProducts.add(productId);
   }
 
+  addRemovedProduct(productId: number) {
+    this.removedProducts.delete(productId);
+  }
+
   isProductRemoved(productId: number): boolean {
     return this.removedProducts.has(productId);
   }

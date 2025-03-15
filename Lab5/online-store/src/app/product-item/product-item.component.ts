@@ -10,6 +10,7 @@ import { CategoriesService } from '../categories.service';
   template: `
     <div class="product-card">
       <button (click)="removeProduct()" class="remove-btn">X</button>
+      <button (click)="addProduct()">+</button>
       <img class="product-main-image" [src]="product.images[0]" alt="{{ product.name }}">
 
       <h2>{{ product.name }}</h2>
@@ -38,6 +39,7 @@ import { CategoriesService } from '../categories.service';
 export class ProductItemComponent implements OnInit {
   @Input() product!: Product;
   @Output() productRemoved = new EventEmitter<number>();
+  @Output() removedProductAdded = new EventEmitter();
 
   sessionService: SessionService = inject(SessionService);
   categoriesService: CategoriesService = inject(CategoriesService);
@@ -72,5 +74,9 @@ export class ProductItemComponent implements OnInit {
   removeProduct() {
     this.sessionService.removeProduct(this.product.id);
     this.productRemoved.emit(this.product.id);
+  }
+
+  addProduct() {
+    this.sessionService.addRemovedProduct(this.product.id);
   }
 }
