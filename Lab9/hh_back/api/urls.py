@@ -1,14 +1,15 @@
 from django.urls import path
 from .views import (
-    company_list, company_details, company_vacancies_list,
-    vacancy_list, vacancy_details, vacancy_top_list
+    CompanyList, CompanyDetails,
+    VacancyList, VacancyDetails,
+    CompanyVacanciesList, VacancyTopList
 )
 
 urlpatterns = [
-    path('companies/', company_list, name='company-list'),
-    path('companies/<int:id>/', company_details, name='company-details'),
-    path('companies/<int:id>/vacancies/', company_vacancies_list, name='company-vacancies'),
-    path('vacancies/', vacancy_list, name='vacancy-list'),
-    path('vacancies/<int:id>/', vacancy_details, name='vacancy-details'),
-    path('vacancies/top_ten/', vacancy_top_list, name='vacancy-top-list')
+    path('companies/', CompanyList.as_view(), name='company-list'),
+    path('companies/<int:id>/', CompanyDetails.as_view(), name='company-details'),
+    path('companies/<int:id>/vacancies/', CompanyVacanciesList.as_view(), name='company-vacancies'),
+    path('vacancies/', VacancyList.as_view(), name='vacancy-list'),
+    path('vacancies/<int:id>/', VacancyDetails.as_view(), name='vacancy-details'),
+    path('vacancies/top_ten/', VacancyTopList.as_view(), name='vacancy-top-list')
 ]
